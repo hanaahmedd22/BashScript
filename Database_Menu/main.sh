@@ -1,5 +1,5 @@
 # #!/usr/bin/bash
-
+[[ ! -d "../Databases" ]] && mkdir "../Databases"
 while true; do
     choice=$(zenity --list --title="Bash DBMS" --column="Options" \
         "Create Database" "List Databases" "Connect to Database" "Drop Database" "Exit" \
