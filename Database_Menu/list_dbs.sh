@@ -1,19 +1,6 @@
 #!/bin/bash
-found=false
-databases_list=()
+DBS=$(ls ../Databases)
 
-for db in "../Databases"/*/; do 
-    [[ -d "$db" ]] || continue 
-    db_name=$(basename "$db")  
-    databases_list+=("$db_name")
-    found=true
-done
+[[ -z "$DBS" ]] && zenity --error --text="No databases found" && ./main.sh && exit 1   
 
-if ! $found; then
-    zenity --error --text="No databases found."
-    ./main.sh
-    exit 1
-else
-    # Show the list of databases using zenity
-    zenity --list --title="Available Databases" --column="Databases" "${databases_list[@]}"
-fi
+zenity --list --title="Available Databases" --column="Databases" $DBS --height=400 --width=400
