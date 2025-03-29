@@ -42,6 +42,9 @@ for ((i=1; i<=num_col; i++)); do
         if [ $? -ne 0 ]; then
             zenity --error --text="Invalid column name for column $i. Only alphanumeric characters are allowed." --width=300
             continue
+        elif [[ " ${column[@]} " =~ " ${col_name} " ]]; then
+            zenity --error --text="Column name '$col_name' already exists. Please choose a different name." --width=300
+            continue
         fi
         column+=("$col_name")
         break
