@@ -1,10 +1,19 @@
 #!/bin/bash
 found=false
-echo "Available Databases:"
+databases_list=()
+
 for db in "../Databases"/*/; do 
     [[ -d "$db" ]] || continue 
     db_name=$(basename "$db")  
-    echo "- $db_name"
+    databases_list+=("$db_name")
     found=true
 done
-! $found && echo "No databases found" && exit 1
+
+if ! $found; then
+    zenity --error --text="No databases found."
+    ./main.sh
+    exit 1
+else
+    # Show the list of databases using zenity
+    zenity --list --title="Available Databases" --column="Databases" "${databases_list[@]}"
+fi
