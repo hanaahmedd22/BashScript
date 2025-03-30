@@ -28,7 +28,7 @@ CheckIfValidOfTableName() {
 
 CheckIfValidOfName() {
     input=$1
-    if [[ $input =~ ^[a-zA-Z][a-zA-Z0-9_]*$]]; then
+    if [[ $input =~ ^[a-zA-Z][a-zA-Z0-9_]*$ ]]; then
 	    return 0
     elif [ -z $input ];then
 	echo "your input is empty"
@@ -36,6 +36,5 @@ CheckIfValidOfName() {
     else
         echo "Invalid column name. Please use only letters and numbers, starting with a letter.Without spaces"
 	    return 1
-        
     fi
 }
