@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 cd ../Database_Connection_Menu
 
-source ./helper/validations.sh
+source ../helper/create_table_validations.sh
 db_name=$1
 db_path=$2
 while true;do 
