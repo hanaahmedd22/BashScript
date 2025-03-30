@@ -9,11 +9,10 @@ if [[ -z "$db_list" ]]; then
 fi
 
 db_name=$(zenity --list --title="Select Database" --column="Databases" $db_list --height=400 --width=400)
-
-if [[ -z "$db_name" ]]; then
-    zenity --error --text="Nothing selected."
+status=$?
+if [ "$status" -ne 0 ] || [ -z "$db_name" ]; then
     ./main.sh
-    exit 1   
+    exit 0  
 fi
 echo "Deleting database '$db_name'..."
 rm -rf "../Databases/$db_name"

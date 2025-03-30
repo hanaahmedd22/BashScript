@@ -1,12 +1,11 @@
 #!/usr/bin/bash
 cd ../Database_Connection_Menu
 
-source ../helper/create_table_validations.sh
+source ../helper/validate_create_table.sh
 db_name=$1
 db_path=$2
 while true;do 
     table_name=$(zenity --entry --title="Create Table" --text="Enter table name:" --width=300)
-
     CheckIfValidOfTableName "$table_name" "$db_path"
     if [ $? -eq 0 ]; then
         zenity --info --text="Table '$table_name' created successfully."

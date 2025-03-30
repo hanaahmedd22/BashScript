@@ -4,6 +4,12 @@ while true; do
     choice=$(zenity --list --title="Bash DBMS" --column="Options" \
         "Create Database" "List Databases" "Connect to Database" "Drop Database" "Exit" \
         --height=300 --width=400)
+
+    status=$?
+
+    if [ "$status" -ne 0 ] || [ -z "$choice" ]; then
+        exit 0
+    fi
     case $choice in
         "Create Database")
            . ./create_db.sh
