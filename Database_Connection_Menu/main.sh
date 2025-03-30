@@ -5,11 +5,11 @@ db_path="../Databases/$db_name"
 echo "Connected to database '$db_name' successfully."
 while true; do
     choice=$(zenity --list --title="Database Connection Menu" --column="Options" "Create Table" "List Tables" "Drop Table" "Insert into Table"  "Select from Table"  "Delete from Table" "Modify Table " "Exit" --height=300 --width=400)
-    
+    echo "Choice: $choice!"
     status=$?
     if [ "$status" -ne 0 ] || [ -z "$choice" ]; then
-        exit 0
         ../Database_Menu/main.sh
+        exit 0
 
     fi
     case $choice in
@@ -31,7 +31,7 @@ while true; do
         "Delete from Table")
             . ./delete_from_table.sh $db_name $db_path
             ;;
-        "Modify Table")
+        "Modify Table ")
             . ./modify_table.sh $db_name $db_path
             ;;
         "Exit")
