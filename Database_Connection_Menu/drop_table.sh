@@ -5,6 +5,7 @@ tables=$(ls $MYDB_path | sed -n 's/.meta$//gp')
 if [ -z "$tables" ]; then
     echo "No tables found in the database to drop ^_^ " 
     zenity --info --text="No tables found in the database $MYDB_name to Drop :]"
+    ./main.sh "$MYDB_name"
     exit 0
 fi
 
@@ -21,7 +22,7 @@ if [[ -z "$tablee_name" ]]; then
         ./main.sh "$MYDB_name"
         exit 0
 fi
+
 echo "Deleting from database '$MYDB_name' Table '$tablee_name'..."
 rm -f "$MYDB_path/$tablee_name.data" "$MYDB_path/$tablee_name.meta"
 zenity --info --text="Delete table '$tablee_name'  from '$MYDB_name'  successfully :] "
-./main.sh "$MYDB_name"
