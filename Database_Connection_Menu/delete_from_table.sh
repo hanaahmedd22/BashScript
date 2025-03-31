@@ -81,7 +81,7 @@ elif [ "$choice" == "Delete by Primary Key" ]; then
             zenity --error --text="Invalid input. Please enter a positive integer value." --width=300
             ../Database_Connection_Menu/main.sh "$db_name"
             exit 1
-        elif [[-z "$pk_value" ]]; then
+        elif [[ -z "$pk_value" ]]; then
             zenity --error --text="Invalid input. Please enter a valid integer value." --width=300
             ../Database_Connection_Menu/main.sh "$db_name"
             exit 1
@@ -106,11 +106,12 @@ elif [ "$choice" == "Delete by Primary Key" ]; then
         ../Database_Connection_Menu/main.sh "$db_name"
         exit 1
     fi
-    unset rows[$row_index]
-    if [ ${#rows[@]} -eq 0 ]; then
+   
+    row_number=$((row_index + 1))
+    if [ ${#rows[@]} -eq 1 ]; then
         > "$table_file"  
     else
-        printf "%s\n" "${rows[@]}" > "$table_file"
+        sed -i "${row_number}d" "$table_file"
     fi
     zenity --info --text="Row with primary key value '$pk_value' deleted successfully." --width=300
     ../Database_Connection_Menu/main.sh "$db_name"
