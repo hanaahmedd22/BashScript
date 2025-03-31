@@ -77,6 +77,14 @@ elif [ "$choice" == "Delete by Primary Key" ]; then
             zenity --error --text="Invalid input. Please enter a valid integer value." --width=300
             ../Database_Connection_Menu/main.sh "$db_name"
             exit 1
+        elif [[ "$pk_value" -lt 0 ]]; then
+            zenity --error --text="Invalid input. Please enter a positive integer value." --width=300
+            ../Database_Connection_Menu/main.sh "$db_name"
+            exit 1
+        elif [[-z "$pk_value" ]]; then
+            zenity --error --text="Invalid input. Please enter a valid integer value." --width=300
+            ../Database_Connection_Menu/main.sh "$db_name"
+            exit 1
         fi
     elif [[ "$pk_data_type" == "varchar" ]]; then
         if [[ -z "$pk_value" ]]; then
