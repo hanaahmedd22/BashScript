@@ -108,5 +108,58 @@ elif [ "$choice" == "Delete by Primary Key" ]; then
     ../Database_Connection_Menu/main.sh "$db_name"
     exit 0
 elif [ "$choice" == "Delete by Column Value" ]; then
-    
+    column=$(zenity --list --title="Available Columns to choose from:" \
+        --text="Columns in the table named: $table" \
+        --column="Columns" "${columns[@]}" \
+        --width=400 --height=300)
+
+    if [ $? -ne 0 ] || [ -z "$column" ]; then
+        ../Database_Connection_Menu/main.sh "$db_name"
+        exit 0
+    fi
+
+    column_index=-1
+    for i in "${!columns[@]}"; do
+        if [[ "${columns[$i]}" == "$column" ]]; then
+            column_index=$i
+            break
+        fi
+    done
+
+    col_data_type=${data_types[$column_index]}
+    echo $col_data_type
+    if [ $? -ne 0 ] || [ -z "$column" ]; then
+        ../Database_Connection_Menu/main.sh "$db_name"
+        exit 0
+    fi
+
+    rows_count=${#rows[@]}
+    if [ $rows_count -eq 0 ]; then
+        zenity --info --text="No data found in the table '$table'." --width=300
+        ../Database_Connection_Menu/main.sh "$db_name"
+        exit 0
+    fi
+
+    row_values=()
+    for i in "${!rows[@]}"; do
+        IFS=',' read -r -a row_data <<< "${rows[$i]}"
+        row_values+=("$((i+1)) - ${row_data[$column_index]}")
+    done
+
+    row=$(zenity --list --title="Available Rows to choose from:" \
+        --text="Rows in the table named: $table (Column: $column)" \
+        --column="Row Number - Value" "${row_values[@]}" \
+        --width=400 --height=300)
+
+    if [ $? -ne 0 ] || [ -z "$row" ]; then
+        ../Database_Connection_Menu/main.sh "$db_name"
+        exit 0
+    fi
+
+    del_row_index=$(echo "$row" | awk '{print $1}')
+    sed -i "${del_row_index}d" "$table_file"
+    zenity --info --text="Row deleted successfully." --width=300
+    ../Database_Connection_Menu/main.sh "$db_name"
+    exit 0
+
 fi
