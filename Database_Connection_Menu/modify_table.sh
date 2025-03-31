@@ -47,7 +47,7 @@ column=$(zenity --list --title="Available Columns to choose from:" \
     --width=400 --height=300)
 pk_index=-1
 for i in "${!columns[@]}"; do
-    if [[ "${columns[$i]}(PK)" == *"(PK)" ]]; then
+    if [[ "${columns[$i]}" == *"(PK)" ]]; then
         pk_index=$i
         break
     fi
