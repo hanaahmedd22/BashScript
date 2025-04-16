@@ -18,6 +18,13 @@ if [[ -z "$db_name" ]]; then
     exit 1   
 fi
 
+if [[ $? -ne 0 ]]; then
+    zenity --error --text="operation cancelled."
+    echo "Operation cancelled."
+    ./main.sh
+    exit 1   
+fi
+
 zenity --info --text="Connected to '$db_name' successfully."
 
 ../Database_Connection_Menu/main.sh $db_name
