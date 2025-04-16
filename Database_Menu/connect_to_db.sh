@@ -11,16 +11,16 @@ fi
 
 db_name=$(zenity --list --title="Select Database" --column="Databases" $db_list --height=400 --width=400)
 
-if [[ -z "$db_name" ]]; then
-    zenity --error --text="Nothing selected."
-    echo "Nothing selected."
+if [[ $? -ne 0 ]]; then
+    zenity --error --text="operation cancelled."
+    echo "Operation cancelled."
     ./main.sh
     exit 1   
 fi
 
-if [[ $? -ne 0 ]]; then
-    zenity --error --text="operation cancelled."
-    echo "Operation cancelled."
+if [[ -z "$db_name" ]]; then
+    zenity --error --text="Nothing selected."
+    echo "Nothing selected."
     ./main.sh
     exit 1   
 fi
